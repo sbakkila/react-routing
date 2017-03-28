@@ -97,32 +97,36 @@ export default class AppContainer extends Component {
         selectedAlbum: convertAlbum(album)
       }));
   }
-
-  deselectAlbum () {
-    this.setState({ selectedAlbum: {}});
-  }
+  
+  // TODO: old code, no longer needed
+  // deselectAlbum () {
+  //   this.setState({ selectedAlbum: {}});
+  // }
 
   render () {
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">
+
+          {/* sidebar always here */}
           <Sidebar deselectAlbum={this.deselectAlbum} />
         </div>
         <div className="col-xs-10">
-        {
-          this.state.selectedAlbum.id ?
-          <Album
-            album={this.state.selectedAlbum}
-            currentSong={this.state.currentSong}
-            isPlaying={this.state.isPlaying}
-            toggleOne={this.toggleOne}
-          /> :
-          <Albums
-            albums={this.state.albums}
-            selectAlbum={this.selectAlbum}
-          />
-        }
+
+          {this.props.children ?
+            React.cloneElement(this.props.children, {
+              album: this.state.selectedAlbum,
+              currentSong: this.state.currentSong,
+              isPlaying: this.state.isPlaying,
+              toggleOne: this.toggleOne,
+              albums: this.state.albums,
+              selectAlbum: this.selectAlbum
+            })
+          : null
+         }
         </div>
+
+        {/* sidebar always here */}
         <Player
           currentSong={this.state.currentSong}
           currentSongList={this.state.currentSongList}
