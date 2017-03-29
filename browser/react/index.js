@@ -10,6 +10,7 @@ import Albums from './components/Albums.js';
 import Album from './components/Album';
 import Sidebar from './components/Sidebar';
 import Player from './components/Player';
+import Artist from './components/Artist'
 
 import { convertAlbum, convertAlbums, skip } from './utils';
 
@@ -19,6 +20,7 @@ ReactDOM.render(
       <IndexRedirect to="/albums" />
       <Route path='albums' component={Albums} />
       <Route path="albums/:albumId" component={Album} />
+      <Route path="artists" component={Artist} />
     </Route>
   </Router>,
   document.getElementById('app')
