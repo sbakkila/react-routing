@@ -9,24 +9,42 @@ class Artist extends  React.Component {
 
   componentDidMount(){
     this.props.getArtist(this.id);
-    this.props.albums.forEach((album) => {
-      this.props.getAlbum(album.id);
-    })
+    this.props.getAlbums(this.id);
 
   }
 
   render(){
       console.log(this.props);
-      const albums = this.props.albums;
+      const albums = this.props.artistAlbums;
+
+
 
     return (
       <div>
         <h3>{this.props.selectedArtist.name}</h3>
         <ol>{albums.map((album)=>{
-          return <li>{album.name}</li>;
-        })}</ol>
-        <h4>{this.props.selectedArtist.name}</h4>
-        <h4>{this.props.selectedArtist.name}</h4>
+          return(
+            <div key={album.id}>
+              <li>{album.name}</li>
+              <img src={`/api/albums/${album.id}/image`} />
+            </div>
+            )
+        })}
+        </ol>
+
+        {albums[0] ?
+          (<ol>{albums.map((album) => {
+            return album.songs.map((song) => {
+              return(
+                <div key={song.id}>
+                  <li>{song.name}</li>
+                </div>
+              )
+            })
+          })}
+          </ol>)
+          : null}
+
       </div>
     )
   }
